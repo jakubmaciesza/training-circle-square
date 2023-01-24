@@ -1,0 +1,36 @@
+<ox-field>
+    <button class="button button-outline" onclick="{ () => sendSetField() }">{ state.value }</button>
+    <script>
+    export default {
+      async onMounted() {
+        this.update({
+          value: ''
+        })
+        this.appState.oxFields[this.props.fieldId] = this;
+        this.hub.invoke("GetField", this.props.fieldId);
+      },
+      async onUpdated() {
+        const lines = [['a1', 'a2', 'a3'],['b1', 'b2', 'b3'],['c1', 'c2', 'c3'],['a1', 'b1', 'c1'],['a2', 'b2', 'c2'],['a3', 'b3', 'c3'],['a1', 'b2', 'c3'],['a3', 'b2', 'c1']];
+        for (let i = 0; i < lines.length; i++) {
+          const [a, b, c] = lines[i];
+          if (this.appState.oxFields[a].state.value && this.appState.oxFields[a].state.value === this.appState.oxFields[b].state.value && this.appState.oxFields[a].state.value === this.appState.oxFields[c].state.value) {
+              this.hub.invoke("SetWinner", this.appState.oxFields[a].state.value);
+          }
+        }
+      },
+      sendSetField() {
+        try {
+            if(this.appState.nextPlayer.state.value === 'o'){
+            this.hub.invoke("SetField", this.props.fieldId, 'o');  
+            this.hub.invoke("SetNextPlayer", 'x');        
+            } else {
+              this.hub.invoke("SetField", this.props.fieldId, 'x');
+              this.hub.invoke("SetNextPlayer", 'o');
+            }
+        } catch (err) {
+            console.error(err);
+        }
+      }
+    }
+  </script>
+</ox-field>

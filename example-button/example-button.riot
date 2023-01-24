@@ -1,0 +1,16 @@
+<example-button>
+    <button class="button button-outline" onclick="{ () => clearBoard() }">new game</button>
+    <script>
+    export default {
+        clearBoard() {   
+            const fieldIds = ['a1','a2','a3','b1','b2','b3','c1','c2','c3'];
+            for(let i = 0; i < fieldIds.length; i++) {
+                this.hub.invoke("GetField", fieldIds[i]);
+            }
+            console.log(this.appState)
+            this.hub.invoke("SetNextPlayer", 'x');
+            this.hub.invoke("SetWinner", '');            
+        }
+    }
+  </script>
+</example-button>
