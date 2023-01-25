@@ -1,12 +1,12 @@
 <example-text>
-    <p>{ state.value }</p>
+    <p>Next Player: { state.value }</p>
     <script>
     export default {
         onMounted() {
-            this.appState.exampleText = this
             this.update({
-                value: 'Click on example-button!'
-            })
+                value: 'x'
+            });
+            this.appState.nextPlayer = this;
         }
     }
   </script>

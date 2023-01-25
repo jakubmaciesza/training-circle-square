@@ -1,14 +1,15 @@
 <example-button>
-    <button class="button button-outline" onclick="{ () => yourFunction() }">example-button</button>
+    <button class="button button-outline" onclick="{ () => clearBoard() }">new game</button>
     <script>
     export default {
-        yourFunction() {
-            var message = "You clicked example-button!"
-            console.log(message)
+        clearBoard() {   
+            const fieldIds = ['a1','a2','a3','b1','b2','b3','c1','c2','c3'];
+            for(let i = 0; i < fieldIds.length; i++) {
+                this.hub.invoke("GetField", fieldIds[i]);
+            }
             console.log(this.appState)
-            this.appState.exampleText.update({ 
-                value: message 
-            })
+            this.hub.invoke("SetNextPlayer", 'x');
+            this.hub.invoke("SetWinner", '');            
         }
     }
   </script>

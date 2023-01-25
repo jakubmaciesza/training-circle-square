@@ -1,0 +1,13 @@
+<winner-text>
+    <p>Winner: { state.value }</p>
+    <script>
+    export default {
+        onMounted() {
+            this.update({
+                value: ''
+            });
+            this.appState.winner = this;
+        }
+    }
+  </script>
+</winner-text>
